@@ -1,0 +1,24 @@
+<!-- usada para herdar o estilo do arquivo base.html--> 
+{% extends "blog/base.html" %}
+
+{% block title %} Bem vindo ao meu blog {% endblock %}
+
+{% block content %}
+<!-- esse loop vai funcionar gracas as 6 linhas escritas no views.py, a gente escreveu oq tem que ser exibido, mas o que de fato vai aparecer, 
+é gerado dinamicamente de acordo com oq ta no BD--> 
+<!-- todos os 'posts' são automaticamente pela view generica e todos os posts sao baseados no nome do model que é 'post'-->  
+
+    {% for post in post_list %}
+        <article>
+            <h2> 
+                <a href = "{{ post.get_absolute_url }}">
+                    {{ post.title }}
+                </a> 
+            </h2>
+            <p class="date">
+                Publicado em {{ post.created }} por {{ post.author }}
+            </p>
+            {{ post.body|linebreaks|truncatewords:10 }}
+        </article>
+    {% endfor %}
+{% endblock %}
